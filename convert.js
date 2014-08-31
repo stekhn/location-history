@@ -59,7 +59,6 @@ function convertData(data) {
     }
 
     mapFocus = calculateMapFocus(latMin, latMax, longMin, longMax);
-    console.log(mapFocus);
 
     fileContent += 'var ' + locationsVariable + ' = ' + JSON.stringify(convertedData) + ';\n';
     fileContent += 'var ' + mapVariable + ' = ' + JSON.stringify(mapFocus) + ';';
