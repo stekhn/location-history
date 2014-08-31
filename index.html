@@ -31,7 +31,7 @@
 
     <script>
 
-    var map = L.map('map').setView([51, 10], 6);
+    var map = L.map('map').setView([map.lat, map.long], map.zoom);
 
     var tiles = L.tileLayer('http://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
         attribution: '<a href="https://www.mapbox.com/about/maps/">Terms and Feedback</a>',

@@ -4,7 +4,7 @@ var fs = require('fs'),
     locationsVariable = 'locations',
     mapVariable = 'map',
     divisor = 10000000,
-    zoomLevel = 6;
+    zoomFactor = 1.5;
 
 
 // Read the file and send to the callback
@@ -87,7 +87,7 @@ function calculateMapFocus(latMin, latMax, longMin, longMax) {
     return {
         lat : ((latMax - latMin) / 2) + latMin,
         long: ((longMax - longMin) / 2) + longMin,
-        zoom: zoomLevel
+        zoom: Math.sqrt(Math.pow(latMax - latMin, 2) + Math.pow(longMax - longMin, 2)) / zoomFactor
     };
 }
 
