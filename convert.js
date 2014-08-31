@@ -28,24 +28,33 @@ function handleFile(err, data) {
 
 function convertData(data) {
 
-    var locations = data.locations;
-    var convertedData = [];
-    var len = locations.length;
-    var str = '';
+    var locations = data.locations,
+        len = locations.length,
+        convertedData = [],
+        mapFocus = [],
+        fileContent = '',
+        latMin = Infinity,
+        latMax = null,
+        longMin = Infinity,
+        longMax = null;
+    
 
     for (var i = 0; i < len; i++) {
 
-        var arr = [];
+        var latitude = locations[i].latitudeE7 / divisor,
+            longitude = locations[i].longitudeE7 / divisor,
+            accuracy = locations[i].accuracy;
 
-        arr.push(locations[i].latitudeE7 / divisor);
-        arr.push(locations[i].longitudeE7 / divisor);
-        arr.push(locations[i].accuracy);
-        convertedData.push(arr);
+        if (latitude < latMin) { latMin = latitude; }
+        if (latitude > latMax) { latMax = latitude; }
+        if (latitude < longMin) { longMin = latitude; }
+        if (latitude > latMax) { longMax = latitude; }
+
+        convertedData.push([latitude, longitude, accuracy]);
     }
 
-    str = str.concat('var ', variableName, ' = ', JSON.stringify(convertedData), ';');
-    saveFile(str);
-
+    fileContent = fileContent.concat('var ', variableName, ' = ', JSON.stringify(convertedData), ';');
+    saveFile(fileContent);
 }
 
 function saveFile(data) {
