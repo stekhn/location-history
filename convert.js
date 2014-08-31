@@ -16,6 +16,7 @@
     mapVariable = 'map', // Name of variable that holds the map focus point and zoom level
     divisor = 10000000, // Divisor to convert the Google geo coordinates to the standard formt
     zoomFactor = 1.5; // Value by which the calculated zoom level is multiplyed
+    radius = 25; // Default radius for a single location 
 
     // Read the file asynchronously and trigger callback
     fs.readFile(inputFile, handleFile);
@@ -55,8 +56,7 @@
 
             // Normalize the coordinates ...
             var latitude = locations[i].latitudeE7 / divisor,
-                longitude = locations[i].longitudeE7 / divisor,
-                accuracy = locations[i].accuracy;
+                longitude = locations[i].longitudeE7 / divisor;
 
             // Get the extrema for latitude and longitude
             if (latitude < latMin) { latMin = latitude; }
@@ -64,7 +64,7 @@
             if (longitude < longMin) { longMin = longitude; }
             if (longitude > longMax) { longMax = longitude; }
 
-            convertedData.push([latitude, longitude, accuracy]);
+            convertedData.push([latitude, longitude, radius]);
         }
 
         mapFocus = calculateMapFocus(latMin, latMax, longMin, longMax);
