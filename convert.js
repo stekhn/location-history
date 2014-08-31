@@ -15,7 +15,7 @@
     locationsVariable = 'locations', // Name of variable that holds the locations
     mapVariable = 'map', // Name of variable that holds the map focus point and zoom level
     divisor = 10000000, // Divisor to convert the Google geo coordinates to the standard formt
-    zoomFactor = 1.5; // Value by which the calculated zoom level is multiplyed
+    zoomFactor = 1.5, // Value by which the calculated zoom level is multiplyed
     radius = 25; // Default radius for a single location 
 
     // Read the file asynchronously and trigger callback
