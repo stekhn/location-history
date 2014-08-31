@@ -3,7 +3,7 @@ Location History visualized
 
 Visualize your Google Location History with Leaflet and the Leaflet heatmap plugin. The node.js application will automatically convert your location data to a suitable format.
 
-[Demo with my location history][]
+[Demo of my location history][1]
 
 ![Google Location History visualized](https://raw.githubusercontent.com/stekhn/location-history/master/preview.jpg)
 
