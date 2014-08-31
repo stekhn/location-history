@@ -1,11 +1,15 @@
 var fs = require('fs'),
     inputFile = 'LocationHistory.json',
     outputFile = 'locations.js',
-    variableName = 'locations',
-    divisor = 10000000;
+    locationsVariable = 'locations',
+    mapVariable = 'map',
+    divisor = 10000000,
+    zoomLevel = 6;
+
 
 // Read the file and send to the callback
 fs.readFile(inputFile, handleFile);
+
 
 // Write the callback function
 function handleFile(err, data) {
@@ -26,12 +30,13 @@ function handleFile(err, data) {
     }
 }
 
+
 function convertData(data) {
 
     var locations = data.locations,
         len = locations.length,
         convertedData = [],
-        mapFocus = [],
+        mapFocus = {},
         fileContent = '',
         latMin = Infinity,
         latMax = null,
@@ -47,18 +52,23 @@ function convertData(data) {
 
         if (latitude < latMin) { latMin = latitude; }
         if (latitude > latMax) { latMax = latitude; }
-        if (latitude < longMin) { longMin = latitude; }
-        if (latitude > latMax) { longMax = latitude; }
+        if (longitude < longMin) { longMin = longitude; }
+        if (longitude > longMax) { longMax = longitude; }
 
         convertedData.push([latitude, longitude, accuracy]);
     }
 
     mapFocus = calculateMapFocus(latMin, latMax, longMin, longMax);
-    fileContent = fileContent.concat('var ', variableName, ' = ', JSON.stringify(convertedData), ';');
+
+    fileContent = fileContent.concat('var ', locationsVariable, ' = ', JSON.stringify(convertedData), ';\n');
+    fileContent.concat('var ', mapVariable, ' = ', JSON.stringify(mapFocus), ';');
+    
     saveFile(fileContent);
 }
 
+
 function saveFile(data) {
+
     fs.writeFile(outputFile, data, function(err) {
 
         if (err) {
@@ -71,8 +81,14 @@ function saveFile(data) {
     });
 }
 
+
 function calculateMapFocus(latMin, latMax, longMin, longMax) {
-    return [ [ (latMax - latMin) / 2, (longMax - longMin) / 2], 6 ];
+
+    return {
+        lat : ((latMax - latMin) / 2) + latMin,
+        long: ((longMax - longMin) / 2) + longMin,
+        zoom: zoomLevel
+    };
 }
 
 
