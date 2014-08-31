@@ -63,11 +63,11 @@ function convertData(data) {
     fileContent += 'var ' + locationsVariable + ' = ' + JSON.stringify(convertedData) + ';\n';
     fileContent += 'var ' + mapVariable + ' = ' + JSON.stringify(mapFocus) + ';';
 
-    saveFile(fileContent);
+    saveFile(fileContent, len);
 }
 
 
-function saveFile(data) {
+function saveFile(data, quantity) {
 
     fs.writeFile(outputFile, data, function(err) {
 
@@ -76,7 +76,7 @@ function saveFile(data) {
             console.log(err);
         } else {
 
-            console.log('Locations saved to ' + outputFile);
+            console.log(quantity + ' locations saved to ' + outputFile);
         }
     });
 }
