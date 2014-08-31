@@ -53,6 +53,7 @@ function convertData(data) {
         convertedData.push([latitude, longitude, accuracy]);
     }
 
+    mapFocus = calculateMapFocus(latMin, latMax, longMin, longMax);
     fileContent = fileContent.concat('var ', variableName, ' = ', JSON.stringify(convertedData), ';');
     saveFile(fileContent);
 }
@@ -68,6 +69,10 @@ function saveFile(data) {
             console.log('Locations saved to ' + outputFile);
         }
     });
+}
+
+function calculateMapFocus(latMin, latMax, longMin, longMax) {
+    return [ [ (latMax - latMin) / 2, (longMax - longMin) / 2], 6 ];
 }
 
 
