@@ -59,6 +59,7 @@ function convertData(data) {
     }
 
     mapFocus = calculateMapFocus(latMin, latMax, longMin, longMax);
+    console.log(mapFocus);
 
     fileContent += 'var ' + locationsVariable + ' = ' + JSON.stringify(convertedData) + ';\n';
     fileContent += 'var ' + mapVariable + ' = ' + JSON.stringify(mapFocus) + ';';
@@ -87,7 +88,7 @@ function calculateMapFocus(latMin, latMax, longMin, longMax) {
     return {
         lat : ((latMax - latMin) / 2) + latMin,
         long: ((longMax - longMin) / 2) + longMin,
-        zoom: Math.sqrt(Math.pow(latMax - latMin, 2) + Math.pow(longMax - longMin, 2)) / zoomFactor
+        zoom: Math.round(Math.sqrt(Math.pow(latMax - latMin, 2) + Math.pow(longMax - longMin, 2)) / zoomFactor)
     };
 }
 

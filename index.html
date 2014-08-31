@@ -33,9 +33,8 @@
 
     var map = L.map('map').setView([map.lat, map.long], map.zoom);
 
-    var tiles = L.tileLayer('http://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
-        attribution: '<a href="https://www.mapbox.com/about/maps/">Terms and Feedback</a>',
-        id: 'examples.map-20v6611k'
+    var tiles = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '<a href="http://www.openstretmap.org/copyright">© OpenStreetMap-Mitwirkende</a>'
     }).addTo(map);
 
     var heat = L.heatLayer(locations, {radius: 15}).addTo(map);
