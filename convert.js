@@ -6,15 +6,14 @@
  */
 
 (function () {
+    'use strict';
 
-   'use strict';
-
-   var fs = require('fs'),
-    inputFile = 'LocationHistory.json', // Set the default name for the input file
-    outputFile = 'locations.js', // Set the default name for the output file
-    locationsVariable = 'locations', // Name of variable that holds the locations
-    divisor = 10000000, // Divisor to convert the Google geo coordinates to the standard formt
-    zoomFactor = 1.5; // Value by which the calculated zoom level is multiplyed
+    var fs = require('fs'),
+        inputFile = 'LocationHistory.json', // Set the default name for the input file
+        outputFile = 'locations.js', // Set the default name for the output file
+        locationsVariable = 'locations', // Name of variable that holds the locations
+        divisor = 10000000, // Divisor to convert the Google geo coordinates to the standard formt
+        zoomFactor = 1.5; // Value by which the calculated zoom level is multiplyed
 
     // Read the file asynchronously and trigger callback
     fs.readFile(inputFile, handleFile);
@@ -49,8 +48,8 @@
 
             let thisEntry = locations[i];
 
-            // filter > 100
-            if(thisEntry.accuracy > 100) {
+            // remove entryies with > 100 accuracy
+            if (thisEntry.accuracy > 100) {
                 continue;
             }
 
@@ -58,8 +57,9 @@
             var latitude = thisEntry.latitudeE7 / divisor,
                 longitude = thisEntry.longitudeE7 / divisor;
 
+            // include the first activity type if defined
             let activityType = '';
-            if(typeof thisEntry.activity == "object") {
+            if (typeof thisEntry.activity == "object") {
                 activityType = thisEntry.activity[0].activity[0].type;
             }
 
@@ -74,7 +74,7 @@
 
     function saveFile(data, quantity) {
 
-        fs.writeFile(outputFile, data, function(err) {
+        fs.writeFile(outputFile, data, function (err) {
 
             if (err) {
 
@@ -86,5 +86,5 @@
             }
         });
     }
-    
+
 }());
