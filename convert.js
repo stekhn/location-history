@@ -11,8 +11,8 @@
     var fs = require('fs'),
         inputFile = 'LocationHistory.json', // Set the default name for the input file
         outputFile = 'locations.js', // Set the default name for the output file
-        locationsVariable = 'locations', // Name of variable that holds the locations
-        mapVariable = 'map', // Name of variable that holds the map focus point and zoom level
+        locationsVariable = 'locationData', // Name of variable that holds the locations
+        mapVariable = 'mapViewData', // Name of variable that holds the map focus point and zoom level
         divisor = 10000000, // Divisor to convert the Google geo coordinates to the standard formt
         zoomFactor = 1.5; // Value by which the calculated zoom level is multiplyed
 
@@ -20,7 +20,7 @@
     if (process.argv[2] !== undefined) {
         inputFile = process.argv[2];
     }
-    console.log("Reading InputFile: ", inputFile);
+    console.log("Reading InputFile:", inputFile);
 
     // Read the file asynchronously and trigger callback
     fs.readFile(inputFile, handleFile);
@@ -32,7 +32,7 @@
             // In case of "no such file or directory" ...
             if (err.code === 'ENOENT') {
                 // ... notify the user about how the file must be named
-                console.error('Location history file not found. The file must be named \"' + inputFile + '\"');
+                console.error(`Location history file not found. The file must be named "${inputFile}"`);
             } else {
 
                 throw err;
@@ -94,20 +94,27 @@
             } else {
 
                 // Saving data was successfull
-                console.log(quantity + ' locations saved to ' + outputFile);
+                console.log(`${quantity} locations saved to ${outputFile}`);
             }
         });
     }
 
     function calculateMapFocus(latMin, latMax, longMin, longMax) {
 
-        return {
+        const mapFocus = {
             // The starting point for the map is calculated by the maximum/minimum latitude/longitude/
             lat: ((latMax - latMin) / 2) + latMin,
             long: ((longMax - longMin) / 2) + longMin,
             // The zoom level is calculated using the Pythagorean theorem
             zoom: Math.round(Math.sqrt(Math.pow(latMax - latMin, 2) + Math.pow(longMax - longMin, 2)) / zoomFactor)
         };
+
+        // sometimes zoom is 250+ and needs to be knocked back
+        if (mapFocus.zoom > 20) {
+            mapFocus.zoom = 3;
+        }
+
+        return mapFocus;
     }
 
 }());
