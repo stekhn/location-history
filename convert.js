@@ -78,8 +78,7 @@
         mapFocus = calculateMapFocus(latMin, latMax, longMin, longMax);
 
         // Make a string out of all data
-        fileContent += 'var ' + locationsVariable + ' = ' + JSON.stringify(convertedData) + ';';
-        fileContent += 'var ' + mapVariable + ' = ' + JSON.stringify(mapFocus) + ';';
+        fileContent = `const ${mapVariable} = ${JSON.stringify(mapFocus)}; const ${locationsVariable} = ${JSON.stringify(convertedData)};`;
 
         saveFile(fileContent, convertedData.length);
     }
@@ -94,7 +93,7 @@
             } else {
 
                 // Saving data was successfull
-                console.log(`${quantity} locations saved to ${outputFile}`);
+                console.log(`${Number(quantity).toLocaleString()} locations saved to "${outputFile}"`);
             }
         });
     }
