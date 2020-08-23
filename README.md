@@ -12,14 +12,13 @@ The Google location history file has a very peculiar format. To be used with Lea
 1. Download and unzip this project. Alternatively: Clone this project using GIT.
 2. Check if you have a [location history][5]. If you have no location history [learn about enabling the service][6] – If you don't mind Google getting a lot of private data from you.
 3. Get your location history from [Google Takeout][7]
-4. Copy your _LocationHistory.json_ to the project folder. Not that the filename is localized. Here in Germany it's named _Standortverlauf_. Rename your location history file to _LocationHistory.json_, if it's not already named that way.
+4. Copy your _LocationHistory.json_ to the project folder. Note that the filename is localized, in Germany it's called _Standortverlauf.json_.
 5. Install [node.js][8] on your machine.
-6. Go to your favorite shell and run the command `node convert.js` inside the project folder.
+6. Go to your favorite shell and run the command `node convert.js` or `node convert.js Standortverlauf.json` inside the project folder.
 7. Open the _index.html_ and enjoy.
 
 ### ToDos
 * Add some kind of clustering alogorithm (k-Means?) to reduce the file size. Right now one year of location gatherings is about 9 MB. 
-* Add support for node arguments, so you can call `node convert.js myfile.json`
 * Add tests for the automatic LatLongBox calculation
 
 Have fun and use the code for your own projects.

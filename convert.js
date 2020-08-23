@@ -16,6 +16,12 @@
         divisor = 10000000, // Divisor to convert the Google geo coordinates to the standard formt
         zoomFactor = 1.5; // Value by which the calculated zoom level is multiplyed
 
+    // look for cli input
+    if (process.argv[2] !== undefined) {
+        inputFile = process.argv[2];
+    }
+    console.log("Reading InputFile: ", inputFile);
+
     // Read the file asynchronously and trigger callback
     fs.readFile(inputFile, handleFile);
 
