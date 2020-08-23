@@ -12,6 +12,7 @@
         inputFile = 'LocationHistory.json', // Set the default name for the input file
         outputFile = 'locations.js', // Set the default name for the output file
         locationsVariable = 'locations', // Name of variable that holds the locations
+        mapVariable = 'map', // Name of variable that holds the map focus point and zoom level
         divisor = 10000000, // Divisor to convert the Google geo coordinates to the standard formt
         zoomFactor = 1.5; // Value by which the calculated zoom level is multiplyed
 
@@ -33,41 +34,46 @@
         } else {
 
             data = JSON.parse(data);
-            convertData(data);
+            convertData(data.locations);
         }
     }
 
-    function convertData(data) {
+    function convertData(inputLocations) {
 
-        var locations = data.locations,
-            convertedData = [],
+        var convertedData = [],
             mapFocus = {},
-            fileContent = '';
+            fileContent = '',
+            latMin = Infinity,
+            latMax = null,
+            longMin = Infinity,
+            longMax = null;
 
-        for (var i = 0; i < locations.length; i++) {
-
-            let thisEntry = locations[i];
+        for (var i = 0; i < inputLocations.length; i++) {
+            let thisLocation = inputLocations[i];
 
             // remove entryies with > 100 accuracy
-            if (thisEntry.accuracy > 100) {
+            if (thisLocation.accuracy > 100) {
                 continue;
             }
 
             // Normalize the coordinates ...
-            var latitude = thisEntry.latitudeE7 / divisor,
-                longitude = thisEntry.longitudeE7 / divisor;
+            var latitude = thisLocation.latitudeE7 / divisor,
+                longitude = thisLocation.longitudeE7 / divisor;
 
-            // include the first activity type if defined
-            let activityType = '';
-            if (typeof thisEntry.activity == "object") {
-                activityType = thisEntry.activity[0].activity[0].type;
-            }
+            // Get the extrema for latitude and longitude
+            if (latitude < latMin) { latMin = latitude; }
+            if (latitude > latMax) { latMax = latitude; }
+            if (longitude < longMin) { longMin = longitude; }
+            if (longitude > longMax) { longMax = longitude; }
 
-            convertedData.push([latitude, longitude, thisEntry.timestampMs, thisEntry.accuracy, activityType]);
+            convertedData.push([latitude, longitude]);
         }
+
+        mapFocus = calculateMapFocus(latMin, latMax, longMin, longMax);
 
         // Make a string out of all data
         fileContent += 'var ' + locationsVariable + ' = ' + JSON.stringify(convertedData) + ';';
+        fileContent += 'var ' + mapVariable + ' = ' + JSON.stringify(mapFocus) + ';';
 
         saveFile(fileContent, convertedData.length);
     }
@@ -85,6 +91,17 @@
                 console.log(quantity + ' locations saved to ' + outputFile);
             }
         });
+    }
+
+    function calculateMapFocus(latMin, latMax, longMin, longMax) {
+
+        return {
+            // The starting point for the map is calculated by the maximum/minimum latitude/longitude/
+            lat: ((latMax - latMin) / 2) + latMin,
+            long: ((longMax - longMin) / 2) + longMin,
+            // The zoom level is calculated using the Pythagorean theorem
+            zoom: Math.round(Math.sqrt(Math.pow(latMax - latMin, 2) + Math.pow(longMax - longMin, 2)) / zoomFactor)
+        };
     }
 
 }());
