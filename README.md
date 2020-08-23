@@ -28,7 +28,6 @@ License: [MIT][9]
 
 [1]: http://leafletjs.com/
 [2]: https://github.com/Leaflet/Leaflet.heat
-[3]: http://stekhn.de/locationhistory
 [4]: http://www.openstreetmap.org/
 [5]: https://maps.google.com/locationhistory/
 [6]: https://support.google.com/accounts/answer/3118687?ref_topic=3100928&hl=en
