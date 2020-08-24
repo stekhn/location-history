@@ -14,7 +14,8 @@
         locationsVariable = 'locationData', // Name of variable that holds the locations
         mapVariable = 'mapViewData', // Name of variable that holds the map focus point and zoom level
         divisor = 10000000, // Divisor to convert the Google geo coordinates to the standard formt
-        zoomFactor = 1.5; // Value by which the calculated zoom level is multiplyed
+        zoomFactor = 1.5, // Value by which the calculated zoom level is multiplyed
+        radius = 25; // Default radius for a single location 
 
     // look for cli input
     if (process.argv[2] !== undefined) {
@@ -72,7 +73,7 @@
             if (longitude < longMin) { longMin = longitude; }
             if (longitude > longMax) { longMax = longitude; }
 
-            convertedData.push([latitude, longitude, 25]);
+            convertedData.push([latitude, longitude, radius]);
         }
 
         mapFocus = calculateMapFocus(latMin, latMax, longMin, longMax);
