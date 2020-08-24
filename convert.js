@@ -14,6 +14,7 @@
         locationsVariable = 'locationData', // Name of variable that holds the locations
         mapVariable = 'mapViewData', // Name of variable that holds the map focus point and zoom level
         divisor = 10000000, // Divisor to convert the Google geo coordinates to the standard formt
+        maxAccuracy = 100, // The maximum accuracy to include in the converted file.
         zoomFactor = 1.5, // Value by which the calculated zoom level is multiplyed
         radius = 25; // Default radius for a single location 
 
@@ -58,8 +59,8 @@
         for (var i = 0; i < inputLocations.length; i++) {
             let thisLocation = inputLocations[i];
 
-            // remove entryies with > 100 accuracy
-            if (thisLocation.accuracy > 100) {
+            // remove entryies with > maximum accuracy
+            if (thisLocation.accuracy > maxAccuracy) {
                 continue;
             }
 
