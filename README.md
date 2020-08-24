@@ -35,8 +35,8 @@ License: [MIT][9]
 
 # convert.js
 - Added CLI input option for filename.
-- Updated variable substitution to use `\``.
-- Added `100` location accracy filter to remove more vague data.
+- Updated variable substitution to use ``.
+- Added location accracy filter (`maxAccuracy`) to remove more vague location data.
 - Fixed issue with `zoom` being set > `250` resulting in an invalid Leaflet view region.
 
 # index / web
