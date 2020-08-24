@@ -25,6 +25,25 @@ Have fun and use the code for your own projects.
 
 License: [MIT][9]
 
+# Changelog
+
+## tgxn 24 Aug 2020
+
+# README
+- Removed invalid demo from README
+- Cleaned up README grammar and included CLI usage.
+
+# convert.js
+- Added CLI input option for filename.
+- Updated variable substitution to use `\``.
+- Added `100` location accracy filter to remove more vague data.
+- Fixed issue with `zoom` being set > `250` resulting in an invalid Leaflet view region.
+
+# index / web
+- Changed to English page `<title>`.
+- Updated Leaflet version to `v0.7.7`.
+- Include the [leaflet-heat][10] plugin locally.
+
 [1]: http://leafletjs.com/
 [2]: https://github.com/Leaflet/Leaflet.heat
 [4]: http://www.openstreetmap.org/
@@ -33,3 +52,4 @@ License: [MIT][9]
 [7]: https://www.google.com/takeout/?pli=1#custom:latitude
 [8]: http://nodejs.org/
 [9]: http://opensource.org/licenses/MIT
+[10]: https://github.com/Leaflet/Leaflet.heat

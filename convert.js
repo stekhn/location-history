@@ -72,7 +72,7 @@
             if (longitude < longMin) { longMin = longitude; }
             if (longitude > longMax) { longMax = longitude; }
 
-            convertedData.push([latitude, longitude]);
+            convertedData.push([latitude, longitude, 25]);
         }
 
         mapFocus = calculateMapFocus(latMin, latMax, longMin, longMax);
