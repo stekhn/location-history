@@ -42,7 +42,7 @@ License: [MIT][9]
 # index / web
 - Changed to English page `<title>`.
 - Updated Leaflet version to `v0.7.7`.
-- Include the [leaflet-heat][10] plugin locally.
+- Include the [leaflet-heat][2] plugin locally.
 
 [1]: http://leafletjs.com/
 [2]: https://github.com/Leaflet/Leaflet.heat
@@ -52,4 +52,3 @@ License: [MIT][9]
 [7]: https://www.google.com/takeout/?pli=1#custom:latitude
 [8]: http://nodejs.org/
 [9]: http://opensource.org/licenses/MIT
-[10]: https://github.com/Leaflet/Leaflet.heat
